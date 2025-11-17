@@ -1,4 +1,4 @@
-var response = await fetch('https://api.are.na/v2/channels/illegibility/contents');
+var response = await fetch('https://api.are.na/v2/channels/proxy-01/contents');
 var data = await response.json();
 
 var blocks = data.contents;
