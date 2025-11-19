@@ -14,7 +14,7 @@ h1{
 }
 
 img {
-  max-width: 80%; /* Ensures the image scales down on smaller screens but doesn't exceed its natural size on large ones. */
+  max-width: 90%; /* Ensures the image scales down on smaller screens but doesn't exceed its natural size on large ones. */
   height: auto;    /* Automatically calculates the height to maintain the aspect ratio. */
   display: block;  /* Helps remove potential extra white space issues. */
 }
