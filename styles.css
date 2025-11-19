@@ -1,7 +1,7 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: black;
+    /* background-color: black; */
 }
 
 h1{
@@ -10,7 +10,7 @@ h1{
     font-size: 20px;
     font-weight: normal;
     font-style: italic;
-    color: white;
+    /* color: white; */
 }
 
 img {
@@ -18,4 +18,8 @@ img {
     height: auto;    /* Automatically calculates the height to maintain the aspect ratio. */
     margin: auto;   /* Centers image horizontally */
     display: block;  /* Helps remove potential extra white space issues. */
+}
+
+a::visited {
+    color: black;
 }
