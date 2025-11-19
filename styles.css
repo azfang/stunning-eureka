@@ -1,20 +1,20 @@
-main {
+body {
+    margin: 0;
+    padding: 0;
     background-color: black;
-    margin: auto;
-    padding: none;
 }
 
 h1{
     /* font-weight: normal; */
     /* font-family: Georgia, 'Times New Roman', Times, serif; */
-    font-size: 24px;
+    font-size: 20px;
     font-weight: normal;
     font-style: italic;
     color: white;
 }
 
 img {
-  max-width: 100%; /* Ensures the image scales down on smaller screens but doesn't exceed its natural size on large ones. */
+  max-width: 80%; /* Ensures the image scales down on smaller screens but doesn't exceed its natural size on large ones. */
   height: auto;    /* Automatically calculates the height to maintain the aspect ratio. */
   display: block;  /* Helps remove potential extra white space issues. */
 }
