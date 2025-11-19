@@ -9,3 +9,9 @@ h1{
     font-style: italic;
     color: white;
 }
+
+img {
+  max-width: 100%; /* Ensures the image scales down on smaller screens but doesn't exceed its natural size on large ones. */
+  height: auto;    /* Automatically calculates the height to maintain the aspect ratio. */
+  display: block;  /* Helps remove potential extra white space issues. */
+}
