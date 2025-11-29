@@ -21,14 +21,15 @@
       background: #fff;
       color: #111;
       font-family: var(--font);
+      background-color: var(--main-bg-color);
     }
 
     main {
       max-width: 800px;
       margin: 6vh auto;
       padding: 2rem;
-      font-size: 18px;
-      line-height: 1.65;
+      /* font-size: 18px; */
+      /* line-height: 1.65; */
     }
 
     /* individual characters */
@@ -112,61 +113,66 @@
       const STAGGER_EXP = 0.8;   // soft randomization
 
       function wrapLetters(rootEl) {
-  const walker = document.createTreeWalker(rootEl, NodeFilter.SHOW_TEXT);
-  const textNodes = [];
-  while (walker.nextNode()) textNodes.push(walker.currentNode);
+        const walker = document.createTreeWalker(rootEl, NodeFilter.SHOW_TEXT);
+        const textNodes = [];
+        while (walker.nextNode()) textNodes.push(walker.currentNode);
 
-  textNodes.forEach(txt => {
-    const parent = txt.parentNode;
-    const text = txt.nodeValue;
+        textNodes.forEach(txt => {
+          const parent = txt.parentNode;
+          const text = txt.nodeValue;
 
-    const frag = document.createDocumentFragment();
+          const frag = document.createDocumentFragment();
 
-    for (const ch of text) {
-      if (ch === " ") {
-        // KEEP NORMAL SPACE (this allows wrapping!)
-        frag.appendChild(document.createTextNode(" "));
-      } else {
-        const span = document.createElement("span");
-        span.className = "char";
-        span.textContent = ch;
-        frag.appendChild(span);
+          for (const ch of text) {
+            if (ch === " ") {
+              // KEEP NORMAL SPACE (this allows wrapping!)
+              frag.appendChild(document.createTextNode(" "));
+            } else {
+              const span = document.createElement("span");
+              span.className = "char";
+              span.textContent = ch;
+              frag.appendChild(span);
+            }
+          }
+
+          parent.replaceChild(frag, txt);
+        });
       }
-    }
 
-    parent.replaceChild(frag, txt);
-  });
-}
+      function randomDelay() {
+        const r = Math.random();
+        const biased = Math.pow(r, STAGGER_EXP);
+        return biased * MAX_DELAY;
+      }
 
-    function randomDelay() {
-      const r = Math.random();
-      const biased = Math.pow(r, STAGGER_EXP);
-      return biased * MAX_DELAY;
-    }
+      function init() {
+        const paragraphs = document.querySelectorAll('main .test');
+        paragraphs.forEach(p => wrapLetters(p));
 
-    function init() {
-      const paragraphs = document.querySelectorAll('main .test');
-      paragraphs.forEach(p => wrapLetters(p));
+        const chars = document.querySelectorAll('.char');
 
-      const chars = document.querySelectorAll('.char');
+        chars.forEach((el, idx) => {
+          const d = randomDelay() + (idx % 15) * 0.01; // mild index bias
 
-      chars.forEach((el, idx) => {
-        const d = randomDelay() + (idx % 15) * 0.01; // mild index bias
+          el.style.setProperty('--d', d.toFixed(3) + 's');
+          el.style.setProperty('--fade-duration', DURATION + 's');
 
-        el.style.setProperty('--d', d.toFixed(3) + 's');
-        el.style.setProperty('--fade-duration', DURATION + 's');
+          void el.offsetHeight;
+          el.classList.add('play');
 
-        void el.offsetHeight;
-        el.classList.add('play');
+          el.addEventListener('animationend', () => {
+            el.style.opacity = '1';
+          }, { once: true });
+        });
+      }
 
-        el.addEventListener('animationend', () => {
-          el.style.opacity = '1';
-        }, { once: true });
-      });
-    }
+      document.addEventListener('DOMContentLoaded', init);
+    })();
 
-    document.addEventListener('DOMContentLoaded', init);
-    }) ();
+    // From http://stackoverflow.com/a/5365036/2065702
+const randomColor = "#"+((1<<24)*Math.random()|0).toString(16); 
+
+document.documentElement.style.setProperty('--main-bg-color', randomColor);
   </script>
 </body>
 
