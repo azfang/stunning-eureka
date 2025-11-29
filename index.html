@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Soft Fade-In Letters</title>
+  <title>Lock/Key</title>
 
   <style>
     :root {
@@ -77,7 +77,7 @@
 <body>
   <main>
     <p>[2]</p>
-    <p class="test"><i>The Zipper Will Remain (fragments taken from book1),</i></p>
+    <p class="test"><i>The Zipper Will Remain (fragments taken from book<sup>1</sup>),</i></p>
     <p class="test">August 8, 2025</p>
     <p class="test">After seeing a show by Ming Fay.</p>
     <p class="test">(Visitors come and go. Come and go. Photograph and go.)</p>
@@ -87,74 +87,6 @@
       letter by letter.</p>
   </main>
 
-  <script>
-    (function () {
-      const MAX_DELAY = 2.2;     // slow reveal
-      const DURATION = 1.2;     // slow fade
-      const STAGGER_EXP = 0.8;   // soft randomization
-
-      function wrapLetters(rootEl) {
-        const walker = document.createTreeWalker(rootEl, NodeFilter.SHOW_TEXT);
-        const textNodes = [];
-        while (walker.nextNode()) textNodes.push(walker.currentNode);
-
-        textNodes.forEach(txt => {
-          const parent = txt.parentNode;
-          const text = txt.nodeValue;
-
-          const frag = document.createDocumentFragment();
-
-          for (const ch of text) {
-            if (ch === " ") {
-              // KEEP NORMAL SPACE (this allows wrapping!)
-              frag.appendChild(document.createTextNode(" "));
-            } else {
-              const span = document.createElement("span");
-              span.className = "char";
-              span.textContent = ch;
-              frag.appendChild(span);
-            }
-          }
-
-          parent.replaceChild(frag, txt);
-        });
-      }
-
-      function randomDelay() {
-        const r = Math.random();
-        const biased = Math.pow(r, STAGGER_EXP);
-        return biased * MAX_DELAY;
-      }
-
-      function init() {
-        const paragraphs = document.querySelectorAll('main .test');
-        paragraphs.forEach(p => wrapLetters(p));
-
-        const chars = document.querySelectorAll('.char');
-
-        chars.forEach((el, idx) => {
-          const d = randomDelay() + (idx % 15) * 0.01; // mild index bias
-
-          el.style.setProperty('--d', d.toFixed(3) + 's');
-          el.style.setProperty('--fade-duration', DURATION + 's');
-
-          void el.offsetHeight;
-          el.classList.add('play');
-
-          el.addEventListener('animationend', () => {
-            el.style.opacity = '1';
-          }, { once: true });
-        });
-      }
-
-      document.addEventListener('DOMContentLoaded', init);
-    })();
-
-    // From http://stackoverflow.com/a/5365036/2065702
-    const randomColor = "#" + ((1 << 24) * Math.random() | 0).toString(16);
-
-    document.documentElement.style.setProperty('--main-bg-color', randomColor);
-  </script>
 </body>
 
 </html>
