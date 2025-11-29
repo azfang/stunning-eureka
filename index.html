@@ -1,18 +1,167 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Exchange</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Soft Fade-In Letters</title>
+
+  <style>
+    :root {
+      --max-delay: 2.2s;      /* slow, relaxed */
+      --fade-duration: 1s;  /* slow fade */
+      --font: "Times New Roman", serif;
+    }
+
+    html,body {
+      /* margin: 0; */
+      background: #fff;
+      color: #111;
+      font-family: var(--font);
+    }
+
+    /* main {
+      max-width: 800px;
+      margin: 6vh auto;
+      padding: 2rem;
+      font-size: 18px;
+      line-height: 1.65;
+    } */
+
+    /* p { margin-bottom: 1.15em; } */
+
+    /* individual characters */
+    .char {
+      display: inline;
+      white-space: pre;
+      opacity: 0;
+      will-change: opacity;
+    }
+
+    /* minimal fade-in, no movement, no scale */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .char.play {
+      animation-name: fadeIn;
+      animation-fill-mode: forwards;
+      animation-timing-function: ease-out;
+      animation-duration: var(--fade-duration);
+      animation-delay: var(--d);
+    }
+
+    .space {
+      display: inline;
+      width:.35em;
+      opacity:1;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .char { opacity: 1 !important; animation: none !important; }
+    }
+  </style>
 </head>
 <body>
-    <main class="wrapper fade-in">
-        <h1 class="" style="text-align: center;"> <a href="exchange.html">Exchange</a>
-            <br>
-            2 of 5</h1>
-        <img src="img/lock1.png" alt="Lock attached to the atrium stairs.">
-    </main>
-    <script src="scripts.js" type="module"></script>
+  <main>
+    <p>[1]</p>
+    <p>[2]</p>
+    <p class="test"><i>The Zipper Will Remain (fragments taken from book1),</i></p>
+    <p class="test">August 8, 2025</p>
+    <p class="test">After seeing a show by Ming Fay.</p>
+    <p class="test">(Visitors come and go. Come and go. Photograph and go.)</p>
+    <p class="test">(These seams still hold space for the once full skin now withered, shrunken. It is a gentle inference that something was there that is no longer. This seam is full because this skin was full.) </p>
+    <p class="test">I photograph each page with my phone, so as not to forget. I later painstakingly type out each line, letter by letter.</p>
+    <p>[3]</p>
+    <p>[4]</p>
+    <p>[5]</p>
+    <p>[6]</p>
+    <p>[7]</p>
+    <p>[8]</p>
+    <p>[9]</p>
+    <p>[10]</p>
+    <p>[11]</p>
+    <p>[12]</p>
+    <p>[13]</p>
+    <p>[14]</p>
+    <p>[15]</p>
+  </main>
+
+  <script>
+    (function () {
+      const MAX_DELAY = 2.2;     // slow reveal
+      const DURATION  = 1.2;     // slow fade
+      const STAGGER_EXP = 0.8;   // soft randomization
+
+      function wrapLetters(rootEl) {
+        const walker = document.createTreeWalker(rootEl, NodeFilter.SHOW_TEXT);
+        const textNodes = [];
+        while (walker.nextNode()) textNodes.push(walker.currentNode);
+
+        textNodes.forEach(txt => {
+          const parent = txt.parentNode;
+
+          if (!txt.nodeValue || txt.nodeValue.trim().length === 0) {
+            const spans = txt.nodeValue.split('').map(ch => {
+              const sp = document.createElement('span');
+              sp.className = 'space';
+              sp.innerHTML = '&nbsp;';
+              return sp;
+            });
+            spans.forEach(s => parent.insertBefore(s, txt));
+            parent.removeChild(txt);
+            return;
+          }
+
+          const frag = document.createDocumentFragment();
+
+          for (const ch of txt.nodeValue) {
+            if (/\s/.test(ch)) {
+              const sp = document.createElement('span');
+              sp.className = 'space';
+              sp.innerHTML = '&nbsp;';
+              frag.appendChild(sp);
+            } else {
+              const span = document.createElement('span');
+              span.className = 'char';
+              span.textContent = ch;
+              frag.appendChild(span);
+            }
+          }
+
+          parent.replaceChild(frag, txt);
+        });
+      }
+
+      function randomDelay() {
+        const r = Math.random();
+        const biased = Math.pow(r, STAGGER_EXP);
+        return biased * MAX_DELAY;
+      }
+
+      function init() {
+        const paragraphs = document.querySelectorAll('main .test');
+        paragraphs.forEach(p => wrapLetters(p));
+
+        const chars = document.querySelectorAll('.char');
+
+        chars.forEach((el, idx) => {
+          const d = randomDelay() + (idx % 15) * 0.01; // mild index bias
+
+          el.style.setProperty('--d', d.toFixed(3) + 's');
+          el.style.setProperty('--fade-duration', DURATION + 's');
+
+          void el.offsetHeight;
+          el.classList.add('play');
+
+          el.addEventListener('animationend', () => {
+            el.style.opacity = '1';
+          }, { once: true });
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', init);
+    })();
+  </script>
 </body>
 </html>
