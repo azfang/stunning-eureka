@@ -17,76 +17,142 @@
 
     html,
     body {
-      margin: auto;
-      background: #fff;
-      color: #111;
+      margin:0;
+      overflow:hidden;
       font-family: var(--font);
-      /* background-color: var(--main-bg-color); */
     }
 
-    main {
-      /* max-width: 800px; */
-      /* margin: 6vh auto; */
-      /* padding: 2rem; */
-      /* font-size: 18px; */
-      /* line-height: 1.65; */
-    }
+    .wrapper{
+    transform: rotate(90deg);
+    transform-origin:bottom left;
+    
+    position:absolute;
+    top: -100vw;
+    left: 0;
+    
+    height:100vw;
+    width:100vh;
 
-    /* individual characters */
-    .char {
-      display: inline;
-      white-space: normal;
-      opacity: 0;
-      will-change: opacity;
-    }
+    overflow:auto;
+}
 
-    /* minimal fade-in, no movement, no scale */
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
+.about {
+  position: absolute;
+  right: 50px;
+}
 
-      to {
-        opacity: 1;
-      }
-    }
+.title {
+  position: absolute;
+  /* right: 50px; */
+}
 
-    .char.play {
-      animation-name: fadeIn;
-      animation-fill-mode: forwards;
-      animation-timing-function: ease-out;
-      animation-duration: var(--fade-duration);
-      animation-delay: var(--d);
-    }
-
-    .space {
-      display: inline;
-      white-space: normal;
-      opacity: 1;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .char {
-        opacity: 1 !important;
-        animation: none !important;
-      }
-    }
+.shorter {
+  width: 75%;
+}
   </style>
 </head>
 
 <body>
-  <main>
-    <p>[2]</p>
-    <p class="test"><i>The Zipper Will Remain (fragments taken from book<sup>1</sup>),</i></p>
-    <p class="test">August 8, 2025</p>
-    <p class="test">After seeing a show by Ming Fay.</p>
-    <p class="test">(Visitors come and go. Come and go. Photograph and go.)</p>
-    <p class="test">(These seams still hold space for the once full skin now withered, shrunken. It is a gentle
-      inference that something was there that is no longer. This seam is full because this skin was full.) </p>
-    <p class="test">I photograph each page with my phone, so as not to forget. I later painstakingly type out each line,
-      letter by letter.</p>
+  <main class="wrapper">
+    <table>
+  <tr>
+    <th>[02]</th>
+    <th class="title"><i>The Zipper Will Remain (fragments taken from book<sup>1</sup>),</i></th>
+    <th class="about">[About]</th>
+  </tr>
+  <tr>
+    <td></td>
+    <td>August 8, 2025</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>After seeing a show by Ming Fay.</td>
+  </tr>
+    <tr>
+    <td></td>
+    <td>(Visitors come and go. Come and go. Photograph and go.)</td>
+  </tr>
+      <tr>
+    <td></td>
+    <td class="shorter">(These seams still hold space for the once full skin now withered, shrunken. It is a gentle
+      inference that something was there that is no longer. This seam is full because this skin was full.)</td>
+  </tr>
+        <tr>
+    <td></td>
+    <td>I photograph each page with my phone, so as not to forget. I later painstakingly type out each line,
+      letter by letter.</td>
+  </tr>
+</table>
   </main>
 
+  <script>
+    (function () {
+      const MAX_DELAY = 2.2;     // slow reveal
+      const DURATION = 1.2;     // slow fade
+      const STAGGER_EXP = 0.8;   // soft randomization
+
+      function wrapLetters(rootEl) {
+        const walker = document.createTreeWalker(rootEl, NodeFilter.SHOW_TEXT);
+        const textNodes = [];
+        while (walker.nextNode()) textNodes.push(walker.currentNode);
+
+        textNodes.forEach(txt => {
+          const parent = txt.parentNode;
+          const text = txt.nodeValue;
+
+          const frag = document.createDocumentFragment();
+
+          for (const ch of text) {
+            if (ch === " ") {
+              // KEEP NORMAL SPACE (this allows wrapping!)
+              frag.appendChild(document.createTextNode(" "));
+            } else {
+              const span = document.createElement("span");
+              span.className = "char";
+              span.textContent = ch;
+              frag.appendChild(span);
+            }
+          }
+
+          parent.replaceChild(frag, txt);
+        });
+      }
+
+      function randomDelay() {
+        const r = Math.random();
+        const biased = Math.pow(r, STAGGER_EXP);
+        return biased * MAX_DELAY;
+      }
+
+      function init() {
+        const paragraphs = document.querySelectorAll('main .test');
+        paragraphs.forEach(p => wrapLetters(p));
+
+        const chars = document.querySelectorAll('.char');
+
+        chars.forEach((el, idx) => {
+          const d = randomDelay() + (idx % 15) * 0.01; // mild index bias
+
+          el.style.setProperty('--d', d.toFixed(3) + 's');
+          el.style.setProperty('--fade-duration', DURATION + 's');
+
+          void el.offsetHeight;
+          el.classList.add('play');
+
+          el.addEventListener('animationend', () => {
+            el.style.opacity = '1';
+          }, { once: true });
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', init);
+    })();
+
+    // From http://stackoverflow.com/a/5365036/2065702
+    const randomColor = "#" + ((1 << 24) * Math.random() | 0).toString(16);
+
+    document.documentElement.style.setProperty('--main-bg-color', randomColor);
+  </script>
 </body>
 
 </html>
