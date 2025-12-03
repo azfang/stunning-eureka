@@ -105,6 +105,14 @@
         <td>Carter was a different person to each of us — to me, Carter was a permanent fixture out of the corner of my eye. He was always there, until he wasn’t. It felt like a betrayal when someone else was eventually hired, and moved into his desk.</td>
       </tr>
     </table>
+    <!-- Overlay must be INSIDE the body -->
+    <div id="aboutOverlay" aria-hidden="true" role="dialog" aria-modal="true">
+      <div class="aboutContent" role="document">
+        <button class="closeBtn" aria-label="Close">✕</button>
+        <div id="aboutInner" aria-live="polite"></div>
+      </div>
+    </div>
+    
   </main>
 
   <script>
