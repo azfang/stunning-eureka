@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Soft Fade-In Letters</title>
+
+  <style>
+    :root {
+      --max-delay: 2.2s;
+      /* slow, relaxed */
+      --fade-duration: 1s;
+      /* slow fade */
+      /* --font: "Times New Roman", serif; */
+      --font: "Courier New", monospace;
+    }
+
+    html,
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: var(--font);
+      font-size: 12.5px;
+    }
+
+    .wrapper {
+      /* transform: rotate(90deg); */
+      /* transform-origin: bottom left; */
+
+      /* position: absolute; */
+      /* top: -100vw; */
+      left: 0;
+
+      /* height: 100vw; */
+      /* width: 100vh; */
+
+      /* overflow: auto; */
+      overflow: none;
+    }
+
+    img {
+      max-height: 95vh;
+    }
+
+    .about {
+      position: absolute;
+      right: 50px;
+    }
+
+    .title {
+      position: absolute;
+    }
+
+    .shorter {
+      width: 75%;
+    }
+
+    .blank_row {
+      height: 10px !important;
+      /* overwrites any other rules */
+      background-color: #FFFFFF;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="wrapper">
+    <img src="img/scan1.jpeg" alt="Scan of the first entry.">
+    <table>
+      <tr>
+        <th class="number">[02]</th>
+        <th class="title"><i>The Zipper Will Remain (fragments taken from book<sup>1</sup>),</i></th>
+        <th class="about">[About]</th>
+      </tr>
+      <tr>
+        <td></td>
+        <td>August 8, 2025</td>
+      </tr>
+      <tr class="blank_row">
+        <td colspan="3"></td>
+      </tr>
+      <tr class="blank_row">
+        <td colspan="3"></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>After seeing a show by Ming Fay.</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>(Visitors come and go. Come and go. Photograph and go.)</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td class="shorter">(These seams still hold space for the once full skin now withered, shrunken. It is a gentle
+          inference that something was there that is no longer. This seam is full because this skin was full.)</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>I photograph each page with my phone, so as not to forget. I later painstakingly type out each line,
+          letter by letter.</td>
+      </tr>
+    </table>
+  </main>
+</body>
+</html>
