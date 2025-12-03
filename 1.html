@@ -7,6 +7,55 @@
   <title>Lock 1 of 20</title>
   <link rel="stylesheet" href="styles.css">
   <style>
+    /* overlay styles */
+    #aboutOverlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.4s ease;
+      z-index: 9999;
+    }
+    #aboutOverlay.show {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: all;
+    }
+    .aboutContent {
+      background: white;
+      padding: 2rem;
+      max-width: 400px;
+      max-height: 80vh;
+      overflow-y: auto;
+      width: 90%;
+      position: relative;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      transform: translateY(10px);
+      opacity: 0;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+    }
+    #aboutOverlay.show .aboutContent {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    .closeBtn {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.75rem;
+      font-size: 1.6rem;
+      border: none;
+      background: none;
+      cursor: pointer;
+      color: black;
+      -webkit-appearance: none;
+      appearance: none;
+    }
   </style>
 </head>
 
