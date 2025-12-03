@@ -1,25 +1,23 @@
-body {
-    margin: 0;
-    padding: 0;
-    /* background-color: black; */
-}
+    html,
+    body {
+      margin: 5px;
+      font-family: var(--font);
+      font-size: 12.5px;
+      background: #fddaef;
+      overflow-wrap: anywhere;
+    }
 
-h1{
-    /* font-weight: normal; */
-    /* font-family: Georgia, 'Times New Roman', Times, serif; */
-    font-size: 20px;
-    font-weight: normal;
-    font-style: italic;
-    /* color: white; */
-}
+    table{
+      font-size: 12.5px;
+    }
 
-img {
-    max-width: 90%; /* Ensures the image scales down on smaller screens but doesn't exceed its natural size on large ones. */
-    height: auto;    /* Automatically calculates the height to maintain the aspect ratio. */
-    margin: auto;   /* Centers image horizontally */
-    display: block;  /* Helps remove potential extra white space issues. */
-}
+    a {
+      color: black;
+    }
 
-a::visited {
-    color: black;
-}
+    .blank_row {
+      height: 10px !important;
+      /* overwrites any other rules */
+      /* background-color: #FFFFFF; */
+      background: #fddaef;
+    }
