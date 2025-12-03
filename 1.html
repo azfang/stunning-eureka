@@ -112,6 +112,73 @@
 </td>
       </tr>
     </table>
+  <!-- Overlay must be INSIDE the body -->
+    <div id="aboutOverlay" aria-hidden="true" role="dialog" aria-modal="true">
+      <div class="aboutContent" role="document">
+        <button class="closeBtn" aria-label="Close">✕</button>
+        <div id="aboutInner" aria-live="polite"></div>
+      </div>
+    </div>
   </main>
+
+  <script>
+    // Grab elements AFTER they exist in the DOM
+    const aboutOverlay = document.getElementById("aboutOverlay");
+    const aboutInner = document.getElementById("aboutInner");
+    const closeBtn = document.querySelector('.closeBtn');
+
+    // Attach handler to ALL .openAbout links (works if there are many)
+    document.querySelectorAll('.openAbout').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        openAbout();
+      });
+    });
+
+    function openAbout() {
+      // lock scrolling on background
+      document.body.style.overflow = 'hidden';
+      aboutOverlay.classList.add("show");
+      aboutOverlay.setAttribute('aria-hidden', 'false');
+
+      // Only fetch once; aboutInner.dataset.loaded used as cache flag
+      if (!aboutInner.dataset.loaded) {
+        // NOTE: when testing locally, run a local server so fetch() can succeed.
+        fetch("about.html")
+          .then(res => {
+            if (!res.ok) throw new Error('Network response not ok');
+            return res.text();
+          })
+          .then(html => {
+            aboutInner.innerHTML = html;
+            aboutInner.dataset.loaded = "true";
+          })
+          .catch(err => {
+            console.error('Error loading about.html:', err);
+            aboutInner.innerHTML = "<p>Error loading About page.</p>";
+          });
+      }
+    }
+
+    function closeAbout() {
+      aboutOverlay.classList.remove("show");
+      aboutOverlay.setAttribute('aria-hidden', 'true');
+      // restore scroll
+      document.body.style.overflow = '';
+    }
+
+    // Close handlers
+    closeBtn.addEventListener('click', closeAbout);
+    aboutOverlay.addEventListener('click', (e) => {
+      if (e.target === aboutOverlay) closeAbout();
+    });
+
+    // keyboard: Escape to close
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && aboutOverlay.classList.contains('show')) {
+        closeAbout();
+      }
+    });
+  </script>
 </body>
 </html>
