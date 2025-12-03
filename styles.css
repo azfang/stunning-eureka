@@ -11,6 +11,10 @@
       font-size: 12.5px;
     }
 
+    :root {
+      --font: "Courier New", monospace;
+    }
+
     a {
       color: black;
         text-decoration: none;
