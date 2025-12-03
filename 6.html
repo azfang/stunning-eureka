@@ -4,84 +4,29 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Soft Fade-In Letters</title>
-
+  <title>Lock 6 of 20</title>
+  <link rel="stylesheet" href="styles.css">
   <style>
-    :root {
-      --max-delay: 2.2s;
-      /* slow, relaxed */
-      --fade-duration: 1s;
-      /* slow fade */
-      /* --font: "Times New Roman", serif; */
-      --font: "Courier New", monospace;
-    }
-
-    html,
-    body {
-      margin: 5px;
-      overflow: hidden;
-      font-family: var(--font);
-      font-size: 12.5px;
-      background: #fddaef;
-    }
-
-    a {
-      /* color: blue; */
-      color: black;
-    }
-
-    .wrapper {
-      /* transform: rotate(90deg); */
-      /* transform-origin: bottom left; */
-
-      /* position: absolute; */
-      /* top: -100vw; */
-      /* left: 0; */
-
-      /* height: 100vw; */
-      /* width: 100vh; */
-
-      /* overflow: auto; */
-      overflow: none;
-    }
-
-    img {
-      max-height: 100vh;
-    }
-
-    .about {
-      position: absolute;
-      right: 50px;
-    }
-
     .title {
-      position: absolute;
+      font-family: "Chancery", "Lucida Handwriting", cursive;
+      font-size: 16px;
     }
 
-    .shorter {
-      width: 75%;
-    }
-
-    .blank_row {
-      height: 10px !important;
-      /* overwrites any other rules */
-      /* background-color: #FFFFFF; */
-      background: #fddaef;
-    }
+    @font-face {
+  font-family: "Chancery";
+  src:
+    url("ITC Zapf Chancery Std Italic.woff") format("woff");
+}
   </style>
 </head>
 
 <body>
-  <main class="wrapper">
-    <table id="08">
+  <main>
+    <table id="6">
       <tr>
-        <th class="number">[08]</th>
-        <th class="title"><i>Print Ephemera (Oslo, Norway),</i></th>
-        <th class="about"><a>[About]</a></th>
-      </tr>
-      <tr>
-        <td></td>
-        <td><i>Friday, August 8, 2025</i></td>
+        <th class="number">/<br>0<br>6<br>/</th>
+        <th class="title"><i>compulsion (New Haven, Connecticut)<br>Wednesday, September 4, 2024</i></th>
+        <th class="about"><a href="about.html">A<br>B<br>O<br>U<br>T</a></th>
       </tr>
       <tr class="blank_row">
         <td colspan="3"></td>
@@ -91,22 +36,20 @@
       </tr>
       <tr>
         <td></td>
-        <td>[1] CoSTUME NATIONAL Summer 2000 Collection Catalogue
+        <td>My earliest memory is of stealing.
         </td>
       </tr>
+      <tr class="blank_row">
+        <td colspan="3"></td>
+      </tr>
+      <tr class="blank_row">
+        <td colspan="3"></td>
+      </tr>
       <tr>
         <td></td>
-        <td>[2] A Magazine Reader 02 - British Vogue November 2018
+        <td>Stealing a small plastic rosary, later draping its string of white beads around my neck. I didn't understand what I had taken from the other girl. It weighed almost nothing in my hands.
         </td>
       </tr>
-      <tr>
-        <td></td>
-        <td>[3] Blumarine Spring/Summer 1996. Shot by Juergen Teller
-      </tr>
-      <tr>
-        <td></td>
-        <td>Quickly read, engaged with, disposed of.
-      </tr>
       <tr class="blank_row">
         <td colspan="3"></td>
       </tr>
@@ -115,10 +58,9 @@
       </tr>
       <tr>
         <td></td>
-        <td>Quickly read, engaged with, disposed of.
-      </tr>
+        <td>I threw away the rosary that same afternoon, before anyone else had realized what I had done.
+</td>
     </table>
   </main>
 </body>
-
 </html>
